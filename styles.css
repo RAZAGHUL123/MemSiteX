@@ -126,3 +126,24 @@ body {
   margin-top: 20px;
   font-size: 20px;
 }
+/* Existing CSS rules */
+
+/* Existing CSS rules */
+
+.correct-choice {
+  background-color: green;
+  color: white;
+}
+
+.result {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.hellyea {
+  font-family: 'Family Guy Font', Arial, sans-serif;
+  font-size: 40px;
+  color: yellow;
+  text-shadow: 2px 2px 4px #000;
+}
+
