@@ -1,137 +1,138 @@
 let flashcards = [];
-const flashcardContainer = document.getElementById('flashcardContainer');
-const flashcardLog = document.getElementById('flashcardLog');
-const playLabel = document.getElementById('playLabel');
-let currentFlashcardIndex = 0;
-let studyInterval;
+    let currentFlashcardIndex = 0;
+    let isFlipped = false;
 
-function addFlashcard() {
-  const inputWord = document.getElementById('inputWord').value;
-  const inputMeaning = document.getElementById('inputMeaning').value;
+    function addFlashcard() {
+      const inputWord = document.getElementById('inputWord').value;
+      const inputMeaning = document.getElementById('inputMeaning').value;
 
-  if (inputWord && inputMeaning) {
-    const flashcard = {
-      word: inputWord,
-      meaning: inputMeaning
-    };
+      if (inputWord && inputMeaning) {
+        const flashcard = {
+          word: inputWord,
+          meaning: inputMeaning
+        };
 
-    flashcards.push(flashcard);
-    clearInputs();
-    logFlashcards();
-  }
-}
+        flashcards.push(flashcard);
+        clearInputs();
+        logFlashcards();
+      }
+    }
 
-function generateFlashcards() {
-  if (flashcards.length > 0) {
-    const textContent = flashcards.map(flashcard => `${flashcard.word}:${flashcard.meaning}`).join('\n');
-    const filename = 'flashcards.txt';
-    const blob = new Blob([textContent], { type: 'text/plain' });
+    function generateFlashcards() {
+      if (flashcards.length > 0) {
+        const textContent = flashcards.map(flashcard => `${flashcard.word}:${flashcard.meaning}`).join('\n');
+        const filename = 'flashcards.txt';
+        const blob = new Blob([textContent], { type: 'text/plain' });
 
-    // Create a temporary link to download the text file
-    const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
-    link.download = filename;
-    link.click();
-  }
-}
+        // Create a temporary link to download the text file
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = filename;
+        link.click();
 
-function clearInputs() {
-  document.getElementById('inputWord').value = '';
-  document.getElementById('inputMeaning').value = '';
-}
+        const flashcardLog = document.getElementById('flashcardLog');
+        flashcardLog.innerHTML = '';
 
-function startPlayback() {
-  if (flashcards.length > 0) {
-    flashcardContainer.innerHTML = '';
+        flashcards.forEach((flashcard, index) => {
+          const flashcardItem = document.createElement('p');
+          flashcardItem.textContent = `${flashcard.word}: ${flashcard.meaning}`;
+          flashcardLog.appendChild(flashcardItem);
+        });
+      }
+    }
 
-    const cardContainer = document.createElement('div');
-    cardContainer.classList.add('card-container');
+    function clearInputs() {
+      document.getElementById('inputWord').value = '';
+      document.getElementById('inputMeaning').value = '';
+    }
 
-    flashcards.forEach((flashcard, index) => {
-      const card = document.createElement('div');
-      card.classList.add('flashcard');
-      card.textContent = flashcard.word;
-      card.style.animationDelay = `${index * 2}s`;
-      card.addEventListener('click', () => flipFlashcard(card));
+    function startPlayback() {
+      if (flashcards.length > 0) {
+        const flashcardContainer = document.getElementById('flashcardContainer');
+        flashcardContainer.innerHTML = '';
 
-      cardContainer.appendChild(card);
-    });
+        const cardContainer = document.createElement('div');
+        cardContainer.classList.add('card-container');
 
-    flashcardContainer.innerHTML = '';
-    flashcardContainer.appendChild(cardContainer);
-    playLabel.textContent = 'Front';
-    playLabel.classList.add('glow');
-    setTimeout(() => {
-      playLabel.classList.remove('glow');
-    }, 2000);
-  }
-}
+        const card = document.createElement('div');
+        card.classList.add('flashcard');
+        card.textContent = flashcards[currentFlashcardIndex].word;
+        card.addEventListener('click', () => flipFlashcard());
 
-function flipFlashcard(card) {
-  card.classList.toggle('flipped');
-  if (card.classList.contains('flipped')) {
-    card.textContent = flashcards[currentFlashcardIndex].meaning;
-    playLabel.textContent = 'Back';
-  } else {
-    card.textContent = flashcards[currentFlashcardIndex].word;
-    playLabel.textContent = 'Front';
-    currentFlashcardIndex = (currentFlashcardIndex + 1) % flashcards.length;
-  }
-}
+        cardContainer.appendChild(card);
 
-function startTest() {
-  if (flashcards.length > 0) {
-    clearInterval(studyInterval);
+        flashcardContainer.innerHTML = '';
+        flashcardContainer.appendChild(cardContainer);
 
-    const cardContainer = document.createElement('div');
-    cardContainer.classList.add('card-container');
+        isFlipped = false;
+        document.getElementById('playLabel').textContent = 'Word';
+      }
+    }
 
-    flashcards.forEach((flashcard, index) => {
-      const card = document.createElement('div');
-      card.classList.add('flashcard');
-      card.textContent = flashcard.word;
-      card.style.animationDelay = `${index * 2}s`;
-      card.addEventListener('click', () => flipFlashcard(card));
+    function flipFlashcard() {
+      isFlipped = !isFlipped;
 
-      cardContainer.appendChild(card);
-    });
+      if (isFlipped) {
+        const card = document.querySelector('.flashcard');
+        card.textContent = flashcards[currentFlashcardIndex].meaning;
+        document.getElementById('playLabel').textContent = 'Definition';
+      } else {
+        const card = document.querySelector('.flashcard');
+        card.textContent = flashcards[currentFlashcardIndex].word;
+        document.getElementById('playLabel').textContent = 'Word';
+      }
+    }
 
-    flashcardContainer.innerHTML = '';
-    flashcardContainer.appendChild(cardContainer);
-  }
-}
+    function startTest() {
+      if (flashcards.length > 0) {
+        currentFlashcardIndex = 0;
+        startPlayback();
+      }
+    }
 
-function shuffleArray(array) {
-  const shuffledArray = [...array];
-  for (let i = shuffledArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-  }
-  return shuffledArray;
-}
+    function navigateToNextCard() {
+      currentFlashcardIndex = (currentFlashcardIndex + 1) % flashcards.length;
+      updateCard();
+    }
 
-function logFlashcards() {
-  flashcardLog.innerHTML = '';
-  flashcards.forEach((flashcard, index) => {
-    const logEntry = document.createElement('div');
-    logEntry.textContent = `${index + 1}. ${flashcard.word}: ${flashcard.meaning}`;
-    flashcardLog.appendChild(logEntry);
-  });
-}
+    function updateCard() {
+      const flashcardContainer = document.getElementById('flashcardContainer');
+      const card = flashcardContainer.querySelector('.flashcard');
+      const playLabel = document.getElementById('playLabel');
 
-function handleFileUpload(event) {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      const contents = e.target.result;
-      const lines = contents.split('\n');
-      flashcards = lines.map(line => {
-        const [word, meaning] = line.split(':');
-        return { word, meaning };
+      if (isFlipped) {
+        card.textContent = flashcards[currentFlashcardIndex].meaning;
+        playLabel.textContent = 'Definition';
+      } else {
+        card.textContent = flashcards[currentFlashcardIndex].word;
+        playLabel.textContent = 'Word';
+      }
+    }
+
+    function logFlashcards() {
+      const flashcardLog = document.getElementById('flashcardLog');
+      flashcardLog.innerHTML = '';
+
+      flashcards.forEach((flashcard, index) => {
+        const logEntry = document.createElement('div');
+        logEntry.textContent = `${index + 1}. ${flashcard.word}: ${flashcard.meaning}`;
+        flashcardLog.appendChild(logEntry);
       });
-      logFlashcards();
-    };
-    reader.readAsText(file);
-  }
-}
+    }
+
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const contents = e.target.result;
+          const lines = contents.split('\n');
+          flashcards = lines.map(line => {
+            const [word, meaning] = line.split(':');
+            return { word, meaning };
+          });
+          logFlashcards();
+        };
+        reader.readAsText(file);
+      }
+    }

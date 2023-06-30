@@ -2,71 +2,8 @@
 <html>
 <head>
   <title>Fancy Flashcard Generator</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: black;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-    .header {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .title {
-      font-family: 'Impact', sans-serif;
-      font-size: 60px;
-      color: yellow;
-      text-shadow: 2px 2px 4px #000;
-    }
-    .menu {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
-    .flashcard {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 300px;
-      background-color: black;
-      color: yellow;
-      font-size: 40px;
-    }
-    .flashcard.flipped {
-      background-color: yellow;
-      color: black;
-    }
-    .play-container {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .play-button {
-      background-color: black;
-      color: yellow;
-      font-size: 40px;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-    .play-button:hover {
-      background-color: yellow;
-      color: black;
-    }
-    .play-label {
-      font-size: 30px;
-      color: yellow;
-      text-shadow: 2px 2px 4px #000;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="stylest.css">
+  
 </head>
 <body>
   <div class="container">
@@ -87,11 +24,14 @@
     <div id="flashcardContainer"></div>
     <div class="play-container">
       <button class="play-button" onclick="startPlayback()">Play</button>
-      <label class="play-label" id="playLabel">Front</label>
+      <label class="play-label" id="playLabel">Word</label>
+      <div class="next-container">
+        <button class="next-button" onclick="navigateToNextCard()">Next</button>
+      </div>
     </div>
     <div id="flashcardLog"></div>
   </div>
 
-  <script src="script.js"></script>
+  <link rel="stylesheet" href="script.js">
 </body>
 </html>
