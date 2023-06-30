@@ -66,8 +66,13 @@ function startPlayback() {
 
     isFlipped = false;
     document.getElementById('playLabel').textContent = 'Word';
+
+    // Remove the testContainer content
+    const testContainer = document.getElementById('testContainer');
+    testContainer.innerHTML = '';
   }
 }
+
 
 function flipFlashcard() {
   isFlipped = !isFlipped;
@@ -147,35 +152,39 @@ function checkAnswer(selectedChoice, correctAnswer) {
 
   if (selectedChoice === correctAnswer) {
     result.textContent = `Your answer: ${selectedChoice} | Correct answer: ${correctAnswer}`;
-    result.style.backgroundColor = 'black';
-    result.style.color = 'yellow';
-
     const hellyea = document.createElement('p');
     hellyea.classList.add('hellyea');
-    hellyea.textContent = 'Hellyea!';
-    hellyea.style.fontSize = '40px';
-    hellyea.style.color = 'yellow';
-    hellyea.style.textShadow = '2px 2px 4px black';
+    hellyea.textContent = 'hellyea';
     result.appendChild(hellyea);
   } else {
-    result.textContent = `Oops, sorry! The correct answer was: ${correctAnswer}`;
-    result.style.backgroundColor = 'black';
+    result.textContent = `Oops, sorry. The correct answer was: ${correctAnswer} | Your answer: ${selectedChoice}`;
     result.style.color = 'yellow';
+    result.style.fontWeight = 'bold';
   }
 
   const nextButton = document.createElement('button');
   nextButton.classList.add('next-button');
   nextButton.textContent = 'Next';
-  nextButton.addEventListener('click', navigateToNextCard);
+  nextButton.addEventListener('click', () => {
+    currentFlashcardIndex = (currentFlashcardIndex + 1) % flashcards.length;
+    startTest();
+  });
 
   testContainer.appendChild(result);
   testContainer.appendChild(nextButton);
 }
 
+
+
 function navigateToNextCard() {
   currentFlashcardIndex = (currentFlashcardIndex + 1) % flashcards.length;
-  startTest();
+  updateCard();
+
+  // Remove the testContainer content
+  const testContainer = document.getElementById('testContainer');
+  testContainer.innerHTML = '';
 }
+
 
 function updateCard() {
   const flashcardContainer = document.getElementById('flashcardContainer');
