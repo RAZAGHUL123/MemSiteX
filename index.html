@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fancy Flashcard Generator</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 class="title">Flashcard Generator</h1>
+    </div>
+    <div class="menu">
+      <label for="inputWord">Word:</label>
+      <input type="text" id="inputWord">
+      <label for="inputMeaning">Meaning:</label>
+      <input type="text" id="inputMeaning">
+      <button onclick="addFlashcard()">Add Flashcard</button>
+      <button onclick="generateFlashcards()">Generate Flashcards</button>
+      <input type="file" id="fileInput" accept=".txt" onchange="handleFileUpload(event)">
+      <label for="fileInput" class="file-upload-label">Upload Word List</label>
+      <button onclick="startTest()">Start Test</button>
+    </div>
+    <div id="flashcardContainer"></div>
+    <div class="play-container">
+      <button class="play-button" onclick="startPlayback()">Play</button>
+      <label class="play-label" id="playLabel">Front</label>
+    </div>
+    <div id="flashcardLog"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
