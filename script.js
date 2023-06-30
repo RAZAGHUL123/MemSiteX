@@ -83,15 +83,15 @@ function startTest() {
   if (flashcards.length > 0) {
     clearInterval(studyInterval);
 
-    const shuffledFlashcards = shuffleArray(flashcards);
     const cardContainer = document.createElement('div');
     cardContainer.classList.add('card-container');
 
-    shuffledFlashcards.forEach((flashcard, index) => {
+    flashcards.forEach((flashcard, index) => {
       const card = document.createElement('div');
       card.classList.add('flashcard');
       card.textContent = flashcard.word;
       card.style.animationDelay = `${index * 2}s`;
+      card.addEventListener('click', () => flipFlashcard(card));
 
       cardContainer.appendChild(card);
     });
@@ -99,24 +99,6 @@ function startTest() {
     flashcardContainer.innerHTML = '';
     flashcardContainer.appendChild(cardContainer);
   }
-}
-
-function zoomFlashcard(card) {
-  card.classList.add('zoomed');
-  card.innerHTML += `
-    <div class="arrow left" onclick="cycleFlashcard(false)">&larr;</div>
-    <div class="arrow right" onclick="cycleFlashcard(true)">&rarr;</div>
-  `;
-}
-
-function cycleFlashcard(next) {
-  const zoomedCard = document.querySelector('.flashcard.zoomed');
-  const zoomedIndex = Array.from(flashcardContainer.children).indexOf(zoomedCard);
-  const currentIndex = (next ? zoomedIndex + 1 : zoomedIndex - 1 + flashcards.length) % flashcards.length;
-
-  zoomedCard.innerHTML = `<div class="front">${flashcards[currentIndex].word}</div>`;
-  zoomedCard.classList.remove('flipped');
-  currentFlashcardIndex = currentIndex;
 }
 
 function shuffleArray(array) {
