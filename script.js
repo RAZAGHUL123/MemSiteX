@@ -90,6 +90,9 @@ function startTest() {
 
     const question = document.createElement('p');
     question.classList.add('question');
+    question.classList.add('big-text');
+    question.style.backgroundColor = 'black';
+    question.style.color = 'yellow';
     question.textContent = `What is the definition of "${flashcards[currentFlashcardIndex].word}"?`;
 
     const choicesContainer = document.createElement('div');
@@ -144,20 +147,12 @@ function checkAnswer(selectedChoice, correctAnswer) {
 
   if (selectedChoice === correctAnswer) {
     result.textContent = `Your answer: ${selectedChoice} | Correct answer: ${correctAnswer}`;
-    const hellyea = document.createElement('p');
-    hellyea.classList.add('hellyea');
-    hellyea.textContent = 'hellyea';
-    result.appendChild(hellyea);
+    result.style.backgroundColor = 'black';
+    result.style.color = 'yellow';
   } else {
-    const oopsMessage = document.createElement('strong');
-    oopsMessage.style.color = 'yellow';
-    oopsMessage.textContent = 'Oops, sorry! ';
-    result.appendChild(oopsMessage);
-
-    const correctAnswerMessage = document.createElement('strong');
-    correctAnswerMessage.style.color = 'yellow';
-    correctAnswerMessage.textContent = `The correct answer was: ${correctAnswer}`;
-    result.appendChild(correctAnswerMessage);
+    result.textContent = `Oops, sorry! The correct answer was: ${correctAnswer}`;
+    result.style.backgroundColor = 'black';
+    result.style.color = 'yellow';
   }
 
   const nextButton = document.createElement('button');
@@ -171,21 +166,7 @@ function checkAnswer(selectedChoice, correctAnswer) {
 
 function navigateToNextCard() {
   currentFlashcardIndex = (currentFlashcardIndex + 1) % flashcards.length;
-  updateCard();
-}
-
-function updateCard() {
-  const flashcardContainer = document.getElementById('flashcardContainer');
-  const card = flashcardContainer.querySelector('.flashcard');
-  const playLabel = document.getElementById('playLabel');
-
-  if (isFlipped) {
-    card.textContent = flashcards[currentFlashcardIndex].meaning;
-    playLabel.textContent = 'Definition';
-  } else {
-    card.textContent = flashcards[currentFlashcardIndex].word;
-    playLabel.textContent = 'Word';
-  }
+  startTest();
 }
 
 function logFlashcards() {
@@ -200,9 +181,7 @@ function logFlashcards() {
 }
 
 function handleFileUpload(event) {
-  flashcards = [];
-  currentFlashcardIndex = 0;
-  isFlipped = false;
+  isTestMode = false;
   const file = event.target.files[0];
   if (file) {
     const reader = new FileReader();
