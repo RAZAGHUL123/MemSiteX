@@ -149,6 +149,14 @@ function checkAnswer(selectedChoice, correctAnswer) {
     result.textContent = `Your answer: ${selectedChoice} | Correct answer: ${correctAnswer}`;
     result.style.backgroundColor = 'black';
     result.style.color = 'yellow';
+
+    const hellyea = document.createElement('p');
+    hellyea.classList.add('hellyea');
+    hellyea.textContent = 'Hellyea!';
+    hellyea.style.fontSize = '40px';
+    hellyea.style.color = 'yellow';
+    hellyea.style.textShadow = '2px 2px 4px black';
+    result.appendChild(hellyea);
   } else {
     result.textContent = `Oops, sorry! The correct answer was: ${correctAnswer}`;
     result.style.backgroundColor = 'black';
@@ -167,6 +175,20 @@ function checkAnswer(selectedChoice, correctAnswer) {
 function navigateToNextCard() {
   currentFlashcardIndex = (currentFlashcardIndex + 1) % flashcards.length;
   startTest();
+}
+
+function updateCard() {
+  const flashcardContainer = document.getElementById('flashcardContainer');
+  const card = flashcardContainer.querySelector('.flashcard');
+  const playLabel = document.getElementById('playLabel');
+
+  if (isFlipped) {
+    card.textContent = flashcards[currentFlashcardIndex].meaning;
+    playLabel.textContent = 'Definition';
+  } else {
+    card.textContent = flashcards[currentFlashcardIndex].word;
+    playLabel.textContent = 'Word';
+  }
 }
 
 function logFlashcards() {
@@ -197,3 +219,4 @@ function handleFileUpload(event) {
     reader.readAsText(file);
   }
 }
+
