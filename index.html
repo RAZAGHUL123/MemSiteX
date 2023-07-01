@@ -8,7 +8,13 @@
   <div class="container">
     <div class="header">
       <h1 class="title">Flashcard Generator</h1>
-      <h3>Clicking add flashcard will add the card to the list on SITE. generate will make a output of the file for future use. start test will make a game of your definitions. Play will show the flash cards and are clickable from front to back</h3>
+      <div class = "signPost">
+        <h3>Clicking "Add Flashcard" will add the flashcard to the list on the site.</h3>
+        <h3>"Generate" will create an output file for future use.</h3>
+        <h3>"Start Test" will initiate a game using the flashcard definitions.</h3>
+        <h3>"Play" will display the flashcards and allow clicking from front to back.</h3>
+      </div>
+      
     </div>
     <div class="menu">
       <label for="inputWord">Word:</label>
@@ -19,12 +25,12 @@
       <button onclick="generateFlashcards()">Generate Flashcards</button>
       <input type="file" id="fileInput" accept=".txt" onchange="handleFileUpload(event)">
       <label for="fileInput" class="file-upload-label">Upload Word List</label>
-      <button onclick="startTest()">Start Test</button>
+      <button onclick="startTest()">Multiple Choice Test</button>
     </div>
     <div id="flashcardContainer"></div>
     <div id="testContainer"></div>
     <div class="play-container">
-      <button class="play-button" onclick="startPlayback()">Play</button>
+      <button class="play-button" onclick="startPlayback()">Generate Flash Card</button>
       <label class="play-label" id="playLabel">Word</label>
       <div class="next-container">
         <button class="next-button" onclick="navigateToNextCard()">Next</button>

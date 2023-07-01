@@ -97,7 +97,9 @@ function startTest() {
     question.classList.add('question');
     question.classList.add('big-text');
     question.style.backgroundColor = 'black';
-    question.style.color = 'yellow';
+    question.style.fontSize = '45px';
+
+    question.style.color = 'violet';
     question.textContent = `What is the definition of "${flashcards[currentFlashcardIndex].word}"?`;
 
     const choicesContainer = document.createElement('div');
@@ -158,8 +160,9 @@ function checkAnswer(selectedChoice, correctAnswer) {
     result.appendChild(hellyea);
   } else {
     result.textContent = `Oops, sorry. The correct answer was: ${correctAnswer} | Your answer: ${selectedChoice}`;
-    result.style.color = 'yellow';
+    result.style.color = 'red';
     result.style.fontWeight = 'bold';
+    result.style.fontSize = '45px';
   }
 
   const nextButton = document.createElement('button');
