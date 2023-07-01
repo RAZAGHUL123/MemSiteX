@@ -165,3 +165,26 @@ label {
 .signPost {
   color:#5EB1BF;
 }
+.footer {
+  background-color: #f2f2f2;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.footer-title {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.footer-text {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 5px;
+}
+
