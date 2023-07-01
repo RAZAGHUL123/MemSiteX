@@ -156,13 +156,13 @@ function checkAnswer(selectedChoice, correctAnswer) {
     result.textContent = `Your answer: ${selectedChoice} | Correct answer: ${correctAnswer}`;
     const hellyea = document.createElement('p');
     hellyea.classList.add('hellyea');
-    hellyea.textContent = 'hellyea';
+    hellyea.textContent = 'You are Correct Keep it up!';
     result.appendChild(hellyea);
   } else {
     result.textContent = `Oops, sorry. The correct answer was: ${correctAnswer} | Your answer: ${selectedChoice}`;
     result.style.color = 'red';
     result.style.fontWeight = 'bold';
-    result.style.fontSize = '45px';
+    result.style.fontSize = '60px';
   }
 
   const nextButton = document.createElement('button');
